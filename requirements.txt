@@ -1,0 +1,30 @@
+# requirements.txt for MACER Final Project
+# All Python code in this repo lives in the `MacerCode` git submodule
+# (main.py, macer.py, model.py, rs/certify.py, rs/core.py).
+# These are the third-party packages that code actually imports.
+
+# --- Core training / model (torch, torchvision) ---
+torch>=1.4.0
+torchvision>=0.5.0
+
+# --- Numerics used by rs/core.py and rs/certify.py ---
+# CAUTION: MacerCode/rs/certify.py uses the deprecated aliases
+# np.float / np.int, removed in NumPy 1.24. A fresh install (e.g. Colab)
+# will pull the latest NumPy and that code will crash on import/run.
+# Pinning numpy<1.24 is NOT a safe fix: no such wheel exists for
+# Python >=3.11 and it fails to build from source. Patch the two lines
+# in rs/certify.py (np.float -> float, np.int -> int) instead of pinning.
+numpy>=1.17.0
+scipy>=1.3.0
+
+# --- Statistics: proportion_confint for the Clopper-Pearson bound (rs/core.py) ---
+statsmodels>=0.10.1
+
+# --- Image loading (rs/certify.py imports PIL.Image) ---
+Pillow>=6.1.0
+
+# --- Optional: only needed if you save/inspect .mat certification outputs ---
+# scipy.io.savemat (already covered by scipy above) writes the .mat files;
+# no extra package is required to create them. Add the following only if
+# you plan to load/analyze the .mat files elsewhere in Python:
+# pandas>=0.25.0
